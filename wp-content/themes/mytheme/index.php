@@ -1,7 +1,7 @@
 <?php get_header(); ?>
 
 <main>
-    Now we are using Bootstrap here... kablamo
+    Fallback of everything, shouldn't hit in our case
 </main>
 
 <?php get_footer(); ?>
