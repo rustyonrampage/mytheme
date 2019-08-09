@@ -8,4 +8,6 @@
     </head>
 
     <body>
-        
+    <!-- Yea i dont like this syntax for using template-parts as well -->
+    <?php get_template_part( 'template-parts/header', 'banner' ); ?>
+
