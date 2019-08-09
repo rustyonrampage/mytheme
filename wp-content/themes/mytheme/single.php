@@ -1,0 +1,1 @@
+Will be used to display a single Post/Page
