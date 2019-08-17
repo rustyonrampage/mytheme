@@ -3,7 +3,7 @@
         // +Stylesheets+
         // Args{ name. path }
         // load the main stylesheet in root folder; style.css
-        wp_enqueue_style( 'style', get_stylesheet_uri() ); 
+        wp_enqueue_style( 'style', get_stylesheet_uri(), array('bootstrap_css') ); 
         // load the bootstrap stylesheet
 	    wp_enqueue_style( 'bootstrap_css', get_theme_file_uri( '/assets/css/bootstrap.min.css' ) );
 
