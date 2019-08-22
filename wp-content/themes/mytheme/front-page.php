@@ -18,23 +18,44 @@
     </div>
   </header>
 
+  <!-- We gonnna get all the categories -->
   <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-between">
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">World</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">U.S.</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Technology</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Design</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Culture</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Business</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Politics</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Opinion</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Science</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Health</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Style</a>
-      <a class="p-2 text-muted" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Travel</a>
+    <nav class="nav d-flex justify-content-center">
+      <?php 
+        $categories = get_categories();
+        foreach ($categories as $item) {
+          # code...
+          print "<a class=\"p-2 text-muted\"  href=\"".get_site_url()."/?cat=".$item->cat_ID."\">".$item->name."</a>";
+        }
+      ?>
     </nav>
   </div>
 
+   <!-- We gonnna get 3 recent posts, 1st will be featured -->
+   <?php 
+      // select sticky post or most recent post if sticky isn't set
+      $args = array( 
+                    'numberposts' => 1,
+                    'post__in' => get_option( 'sticky_posts' ),
+                    'ignore_sticky_posts' => 1);
+      $featured_post = wp_get_recent_posts( $args );
+      $rendered_feature_post = array(
+        "title" => "Untitled",
+        "text" => "There is no post buddy.",
+        "link" => site_url(),
+        "background_image" => "",
+        "date" => ""
+      );
+      if(sizeof($featured_post)>0){
+
+        $rendered_feature_post['title'] = $featured_post[0]["post_title"];
+        $rendered_feature_post['text'] = $featured_post[0]["post_content"];
+        $rendered_feature_post['date'] = $featured_post[0]["post_date"];
+        $rendered_feature_post['link'] = $featured_post[0]["guid"];
+        $photo = get_the_post_thumbnail_url( $featured_post[0]["ID"] );
+      }
+      $a="a";
+    ?>
   <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
       <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
