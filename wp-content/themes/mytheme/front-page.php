@@ -33,6 +33,7 @@
 
    <!-- Featured Post -->
    <?php 
+      $featured_post_ids = array();
       // select sticky post or most recent post if sticky isn't set
       $args = array( 
                     'numberposts' => 1,
@@ -47,7 +48,7 @@
         "date" => ""
       );
       if(sizeof($featured_post)>0){
-
+        array_push( $featured_post_ids, $featured_post[0]['ID'] );
         $rendered_feature_post['title'] = $featured_post[0]["post_title"];
         $rendered_feature_post['text'] = wp_trim_words( $featured_post[0]["post_content"], 23 );
         $rendered_feature_post['date'] = $featured_post[0]["post_date"];
@@ -68,7 +69,7 @@
   // Featured posts row: 2 latest posts only
     $args = array(
       'numberposts' => 2,
-      'exclude' => array(9)
+      'exclude' => $featured_post_ids
     );
     $featured_posts = wp_get_recent_posts( $args );
   ?>
@@ -77,6 +78,7 @@
       print "<div class=\"row mb-2\">";
       foreach($featured_posts as $idx=> $item):
         // init
+        array_push( $featured_post_ids, $item['ID'] );
         $category_text = "General";
         $cat = get_the_category( $item['ID'] );
         $even_odd_classes = $idx % 2 == 0? "text-primary":"text-success";
@@ -86,7 +88,6 @@
           $category_text = $cat[0]->name;
         // endinit
   ?>
-  
     <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
@@ -103,8 +104,6 @@
         </div>
       </div>
     </div>
-
-  
   <?php 
     endforeach;
     print "</div>";
@@ -116,72 +115,62 @@
   <div class="row">
     <div class="col-md-8 blog-main">
       <h3 class="pb-4 mb-4 font-italic border-bottom">
-        From the Firehose
+        More News
       </h3>
+      <?php
+        // Blog Posts List
+        $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+        $args = array('posts_per_page' => get_option( 'posts_per_page' ),
+                      'paged' => $paged,
+                      'post__not_in' => $featured_post_ids, 
+                    );
+        $the_query = new WP_Query( $args );
+        
+        global $wp_query; // Put default query object in a temp variable
+        $tmp_query = $wp_query;// Now wipe it out completely
+        $wp_query = null; 
+        $wp_query = $the_query; // Re-populate the global with our custom query
 
-      <div class="blog-post">
-        <h2 class="blog-post-title">Sample blog post</h2>
-        <p class="blog-post-meta">January 1, 2014 by <a href="https://getbootstrap.com/docs/4.3/examples/blog/#">Mark</a></p>
+        if ( $the_query->have_posts() ) : 
+          // Start the Loop 
+          while ( $the_query->have_posts() ):
+             $the_query->the_post(); 
+          ?>
+            <div class="blog-post">
+                <h2 class="blog-post-title"><?php the_title(); ?></h2>
+                <p class="blog-post-meta"><?php print get_the_date(); ?> by <?php  the_author_posts_link(); ?></p>
+                <p><?php print get_the_excerpt(); ?></p>
+            </div><!-- /.blog-post -->
+          <?php
+          // End the Loop 
+          
+          endwhile;
+          $prev_posts_url = get_previous_posts_page_link();
+          $next_posts_url = get_next_posts_page_link(  $the_query->max_num_pages);
+          
+          global $wp;
+          $current_page_url = home_url( $wp->request ).'/';
+          
+          $prev_link_ui_classes = "btn-outline-primary";
+          if( $current_page_url == $prev_posts_url || $prev_posts_url== null)
+            $prev_link_ui_classes =  "btn-outline-secondary disabled";
 
-        <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-        <hr>
-        <p>Cum sociis natoque penatibus et magnis <a href="https://getbootstrap.com/docs/4.3/examples/blog/#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-        <blockquote>
-          <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </blockquote>
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        <h2>Heading</h2>
-        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-        <h3>Sub-heading</h3>
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-        <pre><code>Example code block</code></pre>
-        <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-        <h3>Sub-heading</h3>
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <ul>
-          <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-          <li>Donec id elit non mi porta gravida at eget metus.</li>
-          <li>Nulla vitae elit libero, a pharetra augue.</li>
-        </ul>
-        <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-        <ol>
-          <li>Vestibulum id ligula porta felis euismod semper.</li>
-          <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-          <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-        </ol>
-        <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-      </div><!-- /.blog-post -->
+          $next_link_ui_classes = "btn-outline-primary";
+          if( $current_page_url == $next_posts_url || $next_posts_url== null)
+            $next_link_ui_classes =  "btn-outline-secondary disabled";
 
-      <div class="blog-post">
-        <h2 class="blog-post-title">Another blog post</h2>
-        <p class="blog-post-meta">December 23, 2013 by <a href="https://getbootstrap.com/docs/4.3/examples/blog/#">Jacob</a></p>
-
-        <p>Cum sociis natoque penatibus et magnis <a href="https://getbootstrap.com/docs/4.3/examples/blog/#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-        <blockquote>
-          <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </blockquote>
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-      </div><!-- /.blog-post -->
-
-      <div class="blog-post">
-        <h2 class="blog-post-title">New feature</h2>
-        <p class="blog-post-meta">December 14, 2013 by <a href="https://getbootstrap.com/docs/4.3/examples/blog/#">Chris</a></p>
-
-        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <ul>
-          <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-          <li>Donec id elit non mi porta gravida at eget metus.</li>
-          <li>Nulla vitae elit libero, a pharetra augue.</li>
-        </ul>
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-      </div><!-- /.blog-post -->
-
-      <nav class="blog-pagination">
-        <a class="btn btn-outline-primary" href="https://getbootstrap.com/docs/4.3/examples/blog/#">Older</a>
-        <a class="btn btn-outline-secondary disabled" href="https://getbootstrap.com/docs/4.3/examples/blog/#" tabindex="-1" aria-disabled="true">Newer</a>
-      </nav>
+          wp_reset_postdata();
+          ?>
+          <nav class="blog-pagination">
+              <a class="btn <?php print $prev_link_ui_classes; ?>" href="<?php print $prev_posts_url; ?>">Older</a>
+              <a class="btn <?php print $next_link_ui_classes; ?>"  href="<?php print $next_posts_url; ?>" >Newer</a>
+          </nav>
+       <?php
+       else: 
+      // If no posts match this query, output this text. 
+          _e( 'Sorry, no posts matched your criteria.', 'textdomain' ); 
+      endif; 
+      ?>
 
     </div><!-- /.blog-main -->
 
