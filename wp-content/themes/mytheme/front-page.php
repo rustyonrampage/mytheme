@@ -31,7 +31,7 @@
     </nav>
   </div>
 
-   <!-- We gonnna get 3 recent posts, 1st will be featured -->
+   <!-- Featured Post -->
    <?php 
       // select sticky post or most recent post if sticky isn't set
       $args = array( 
@@ -64,36 +64,52 @@
     </div>
   </div>
 
-  <div class="row mb-2">
+  <?php 
+  // Featured posts row: 2 latest posts only
+    $args = array(
+      'numberposts' => 2,
+      'exclude' => array(9)
+    );
+    $featured_posts = wp_get_recent_posts( $args );
+  ?>
+  <?php 
+    if( sizeof($featured_posts) > 0 ): 
+      print "<div class=\"row mb-2\">";
+      foreach($featured_posts as $idx=> $item):
+        // init
+        $category_text = "General";
+        $cat = get_the_category( $item['ID'] );
+        $even_odd_classes = $idx % 2 == 0? "text-primary":"text-success";
+        //$published_date = date_parse($item['post_date']);
+        $published_date = date_format ( date_create($item['post_date']) , "M, Y" ); 
+        if(sizeof($cat)>0)
+          $category_text = $cat[0]->name;
+        // endinit
+  ?>
+  
     <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">World</strong>
-          <h3 class="mb-0">Featured post</h3>
-          <div class="mb-1 text-muted">Nov 12</div>
-          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-          <a href="https://getbootstrap.com/docs/4.3/examples/blog/#" class="stretched-link">Continue reading</a>
+          <strong class="d-inline-block mb-2 <?php print $even_odd_classes; ?>">
+            <?php print $category_text." ".$even_odd; ?>
+          </strong>
+          <h3 class="mb-0"><?php print $item['post_title']; ?></h3>
+          <div class="mb-1 text-muted"><?php print $published_date; ?></div>
+          <p class="card-text mb-auto"><?php print wp_trim_words( $item['post_content'], 15 ); ?></p>
+          <a href="<?php print $item['guid']; ?>" class="stretched-link">Continue reading</a>
         </div>
         <div class="col-auto d-none d-lg-block">
           <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success">Design</strong>
-          <h3 class="mb-0">Post title</h3>
-          <div class="mb-1 text-muted">Nov 11</div>
-          <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-          <a href="https://getbootstrap.com/docs/4.3/examples/blog/#" class="stretched-link">Continue reading</a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  
+  <?php 
+    endforeach;
+    print "</div>";
+    endif; 
+  ?>
 </div>
 
 <main role="main" class="container">
