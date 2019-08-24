@@ -16,9 +16,9 @@
         </a> -->
         <form class="mb-0 mr-3" method="GET" action="<?php print home_url('/'); ?>">
           <div class="input-group input-group-sm">
-            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <input type="text" class="form-control search_input" name="s">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="submit">Submit</button>
+              <button class="btn btn-outline-secondary search_button" type="submit"><i class="fas fa-search"></i></button>
             </div>
           </div>
         </form>

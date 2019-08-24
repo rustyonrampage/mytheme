@@ -196,3 +196,18 @@ Description: A light weight bare minimum theme to test the functionality of them
     margin-bottom: 0;
   }
   
+  .search_input{
+    outline: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+  .search_input:focus{
+    border-color: rgb(77, 0, 179);
+  }
+  .search_button{
+    outline: none;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+  }
