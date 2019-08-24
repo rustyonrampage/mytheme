@@ -1,18 +1,5 @@
 
 <?php get_header(); ?>
-  <!-- We gonnna get all the categories -->
-  <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-center">
-      <?php 
-        $categories = get_categories();
-        foreach ($categories as $item) {
-          # code...
-          print "<a class=\"p-2 text-muted\"  href=\"".get_site_url()."/?cat=".$item->cat_ID."\">".$item->name."</a>";
-        }
-      ?>
-    </nav>
-  </div>
-
    <!-- Featured Post -->
    <?php 
       $featured_post_ids = array();
@@ -37,7 +24,6 @@
         $rendered_feature_post['link'] = $featured_post[0]["guid"];
         $$rendered_feature_post['image']  = get_the_post_thumbnail_url( $featured_post[0]["ID"] );
       }
-      $a="a";
     ?>
   <div style="background-image:url(<?php print $$rendered_feature_post['image'] ?>)" class="jumbotron  p-4 p-md-5 text-white rounded bg-dark">
     <div class="col-md-6 px-0">
@@ -122,6 +108,8 @@
                 <h2 class="blog-post-title"><?php the_title(); ?></h2>
                 <p class="blog-post-meta"><?php print get_the_date(); ?> by <?php  the_author_posts_link(); ?></p>
                 <p><?php print get_the_excerpt(); ?></p>
+                <a href="<?php print get_the_permalink(); ?>" class="stretched-link">Continue reading</a>
+
             </div><!-- /.blog-post -->
           <?php
           // End the Loop 
@@ -169,7 +157,7 @@
         <ol class="list-unstyled mb-0">
         <?php 
           $args = array(
-            'type'            => 'monthly',
+            'type' => 'monthly',
           );
         ?>
         <?php wp_get_archives( $args ); ?>
