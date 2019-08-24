@@ -1,13 +1,13 @@
 
 <?php wp_head(); ?>
 <div class="container">
-  <header class="blog-header py-3">
+  <header class="blog-header py-3" id="header">
     <div class="row flex-nowrap justify-content-between align-items-center">
       <div class="col-4 pt-1">
         <a class="text-muted" href="<?php print get_bloginfo('rss_url'); ?>">Subscribe</a>
       </div>
       <div class="col-4 text-center">
-        <a class="blog-header-logo text-dark" href="<?php print get_bloginfo('wpurl'); ?>"><?php print get_bloginfo('name') ; ?></a>
+        <a  class="blog-header-logo text-dark" href="<?php print get_bloginfo('wpurl'); ?>"><?php print get_bloginfo('name') ; ?></a>
       </div>
       <div class="col-4 d-flex flex-row justify-content-end align-items-center">
         
@@ -191,7 +191,10 @@
     <aside class="col-md-4 blog-sidebar">
       <div class="p-4 mb-3 bg-light rounded">
         <h4 class="font-italic">About</h4>
-        <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+        <p class="mb-0">
+          This is a basic blog theme for <em> WordPress </em>. It covers the basics like templates, loops, customizations, 
+          utilizing major features and functions.
+        </p>
       </div>
 
       <div class="p-4">
