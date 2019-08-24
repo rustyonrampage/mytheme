@@ -218,9 +218,9 @@
       <div class="p-4">
         <h4 class="font-italic">Elsewhere</h4>
         <ol class="list-unstyled">
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">GitHub</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">Twitter</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">Facebook</a></li>
+          <li><a href="https://github.com/rustyonrampage">GitHub</a></li>
+          <li><a href="https://twitter.com/rustyonrampage">Twitter</a></li>
+          <li><a href="https://www.facebook.com/RustyOnRampage">Facebook</a></li>
         </ol>
       </div>
     </aside><!-- /.blog-sidebar -->
