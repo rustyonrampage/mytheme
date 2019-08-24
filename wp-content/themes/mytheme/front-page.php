@@ -200,19 +200,14 @@
       <div class="p-4">
         <h4 class="font-italic">Archives</h4>
         <ol class="list-unstyled mb-0">
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">March 2014</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">February 2014</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">January 2014</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">December 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">November 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">October 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">September 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">August 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">July 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">June 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">May 2013</a></li>
-          <li><a href="https://getbootstrap.com/docs/4.3/examples/blog/#">April 2013</a></li>
+        <?php 
+          $args = array(
+            'type'            => 'monthly',
+          );
+        ?>
+        <?php wp_get_archives( $args ); ?>
         </ol>
+ 
       </div>
 
       <div class="p-4">
