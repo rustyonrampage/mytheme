@@ -23,11 +23,14 @@
     
     // CUstomizing our search form 
     function wpdocs_my_search_form( $form ) {
-        $form = '<form role="search" method="get" id="searchform" class="searchform" action="' . home_url( '/' ) . '" >
-        <div><label class="screen-reader-text" for="s">' . __( 'Search for:' ) . '</label>
-        <input type="text" value="' . get_search_query() . '" name="s" id="s" />
-        <input type="submit" id="searchsubmit" value="'. esc_attr__( 'Search' ) .'" />
-        </div>
+        $form = '   
+        <form class="mb-0 mr-3" method="GET" action="'. home_url('/').'">
+            <div class="input-group input-group-sm">
+            <input type="text" class="form-control search_input" name="s">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary search_button" type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            </div>
         </form>';
      
         return $form;
