@@ -203,11 +203,35 @@ Description: A light weight bare minimum theme to test the functionality of them
     box-shadow: none !important;
   }
   .search_input:focus{
-    border-color: rgb(77, 0, 179);
+    border-color: rgb(61, 139, 228);
   }
   .search_button{
     outline: none;
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
+  }
+
+  .parallax {
+    /* The image used */
+    /* Set a specific height */
+    min-height: 400px; 
+  
+    /* Create the parallax scrolling effect */
+    /* background-attachment: fixed; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .reply{
+    margin-bottom: 20px;
+  }
+
+  .thread-even{
+    background-color: #eeeeee48
+  }
+
+  .thread-odd{
+    background-color: #eeeeee48
   }

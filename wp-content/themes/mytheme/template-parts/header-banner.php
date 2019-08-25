@@ -30,3 +30,15 @@
       </div>
     </div>
   </header>
+    <!-- We gonnna get all the categories -->
+  <div class="nav-scroller py-1 mb-2">
+    <nav class="nav d-flex justify-content-center">
+      <?php 
+        $categories = get_categories();
+        foreach ($categories as $item) {
+          # code...
+          print "<a class=\"p-2 text-muted\"  href=\"".get_site_url()."/?cat=".$item->cat_ID."\">".$item->name."</a>";
+        }
+      ?>
+    </nav>
+  </div>
