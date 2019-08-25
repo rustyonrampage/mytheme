@@ -4,6 +4,8 @@ A custom Wordpress theme created from the design available
 on  [Bootstrap](https://getbootstrap.com/docs/4.3/examples/blog/). This theme is creeated as a learning process of custom Wordpress developement. In it, I have tried to utilize all the useful features offered by Wordpress CMS.
 This theme includes a homepage, archives and single post page. 
 
+![alt text](01.png)
+
 I used styles from [Bootstrap](https://getbootstrap.com/docs/4.3/examples/blog/) example and used Bootstrap framework for Frontend.
 
 I used the following WordPress features.
