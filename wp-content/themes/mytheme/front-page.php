@@ -138,7 +138,7 @@
        <?php
        else: 
       // If no posts match this query, output this text. 
-          _e( 'Sorry, no posts matched your criteria.', 'textdomain' ); 
+          _e( 'Sorry, no more posts available.', 'textdomain' ); 
       endif; 
       ?>
     </div><!-- /.blog-main -->
